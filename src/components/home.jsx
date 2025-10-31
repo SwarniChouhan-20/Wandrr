@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import "./home.css";
-const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
-console.log(apiKey);
 export default function Home() {
   const navigate = useNavigate();
 
