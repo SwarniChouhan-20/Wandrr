@@ -2,14 +2,19 @@ import React, { useState } from "react";
 
 const destinations = ["Tokyo", "Paris", "New York", "Bali", "London"];
 
-const PlanStep1 = ({ onNext }) => {
-  const [destination, setDestination] = useState("");
-  const [duration, setDuration] = useState(7);
+const PlanStep1 = ({ onNext, formData, setFormData }) => {  // ✅ Add these props
+  const [destination, setDestination] = useState(formData.destination || "");
+  const [duration, setDuration] = useState(formData.duration || 7);
+
+  const handleNext = () => {
+    setFormData({ ...formData, destination, duration });
+    onNext();
+  };
 
   return (
     <div className="plan-step">
       <h2>Where would you like to go?</h2>
-      <p>Tell us your dream destination and how long you’d like to stay</p>
+      <p>Tell us your dream destination and how long you'd like to stay</p>
 
       <label>Destination</label>
       <input
@@ -39,7 +44,7 @@ const PlanStep1 = ({ onNext }) => {
 
       <div className="btn-group">
         <button disabled>← Back</button>
-        <button onClick={onNext}>Next →</button>
+        <button onClick={handleNext}>Next →</button>
       </div>
     </div>
   );

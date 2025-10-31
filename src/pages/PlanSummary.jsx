@@ -1,53 +1,75 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import OpenAI from "openai";
 import "./PlanSummary.css";
 
 const PlanSummary = ({ formData, onBack }) => {
   const navigate = useNavigate();
   const { destination, duration, mood, budget, travelType, foodPreferences } = formData;
 
-  // Generate itinerary based on mood + duration
-  const generateItinerary = () => {
-    const days = Number(duration) || 3;
-    const plan = [];
-    for (let i = 1; i <= days; i++) {
-      let activity = "";
-      switch (mood) {
-        case "Party":
-          activity = "Enjoy the nightlife, beach parties, and local clubs.";
-          break;
-        case "Relaxing":
-          activity = "Visit spas, beaches, and scenic cafés for unwinding.";
-          break;
-        case "Adventure":
-          activity = "Try trekking, water sports, and outdoor exploration.";
-          break;
-        case "Cultural":
-          activity = "Explore museums, heritage walks, and local art.";
-          break;
-        default:
-          activity = "Discover local highlights and hidden gems.";
-      }
+  const [itinerary, setItinerary] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-      const meal =
-        foodPreferences && foodPreferences.length
-          ? `Try ${foodPreferences[Math.floor(Math.random() * foodPreferences.length)]}.`
-          : "Try local dishes and street food.";
+  // 🔑 Your Gemini API Key
+  const GEMINI_API_KEY = "AIzaSyCoekjWF4yyj2Chq2oDhaxpo2PIKZ8J0hI";
 
-      plan.push({
-        day: i,
-        title: `Day ${i}`,
-        activity,
-        meal,
-      });
-    }
-    return plan;
-  };
+  // Initialize Gemini-compatible OpenAI client
+  const client = new OpenAI({
+    apiKey: GEMINI_API_KEY,
+    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+    dangerouslyAllowBrowser: true, // ✅ Required for frontend use
+  });
 
-  const itinerary = generateItinerary();
+  useEffect(() => {
+    generateAIItinerary();
+  }, []);
+
+  const generateAIItinerary = async () => {
+  setLoading(true);
+  setError("");
+
+  const prompt = `Create a detailed ${duration}-day travel itinerary for ${destination}.
+
+Travel Details:
+- Duration: ${duration} days
+- Mood/Style: ${mood}
+- Budget: $${budget}
+- Travel Type: ${travelType}
+- Food Preferences: ${foodPreferences.join(", ")}
+
+Please provide a day-by-day itinerary with:
+- Morning, afternoon, and evening activities
+- Recommended restaurants/food spots matching preferences
+- Approximate costs within the budget
+- Travel tips specific to ${destination}
+
+Format each day clearly with "Day X:" headers.`;
+
+  try {
+    const response = await fetch("http://localhost:5000/api/itinerary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt }),
+    });
+
+    const data = await response.json();
+
+    if (data.error) throw new Error(data.error.message || "Failed to generate itinerary");
+
+    const generatedText = data.candidates[0]?.content?.parts?.[0]?.text || "No response from AI.";
+    setItinerary(generatedText);
+  } catch (err) {
+    setError(err.message || "Connection error.");
+    console.error("Backend Error:", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleRestart = () => {
-    navigate("/"); // ✅ Redirects to Home Page
+    navigate("/");
   };
 
   return (
@@ -58,14 +80,28 @@ const PlanSummary = ({ formData, onBack }) => {
         <strong>Travel Type:</strong> {travelType} | <strong>Budget:</strong> ${budget}
       </p>
 
-      <div className="day-plan">
-        {itinerary.map((day) => (
-          <div key={day.day} className="day-card">
-            <h3>{day.title}</h3>
-            <p>{day.activity}</p>
-            <p>{day.meal}</p>
+      <div className="itinerary-content">
+        {loading && (
+          <div className="loading-state">
+            <div className="spinner"></div>
+            <p>Crafting your perfect itinerary...</p>
           </div>
-        ))}
+        )}
+
+        {error && (
+          <div className="error-state">
+            <p>❌ {error}</p>
+            <button onClick={generateAIItinerary}>Try Again</button>
+          </div>
+        )}
+
+        {itinerary && !loading && (
+          <div className="ai-itinerary">
+            <pre style={{ whiteSpace: "pre-wrap", fontFamily: "inherit" }}>
+              {itinerary}
+            </pre>
+          </div>
+        )}
       </div>
 
       <div className="btn-group">

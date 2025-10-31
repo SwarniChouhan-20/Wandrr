@@ -2,12 +2,17 @@ import React, { useState } from "react";
 
 const moods = ["Party", "Relaxing", "Adventure", "Cultural"];
 
-const PlanStep2 = ({ onBack, onNext }) => {
-  const [selectedMood, setSelectedMood] = useState("");
+const PlanStep2 = ({ onBack, onNext, formData, setFormData }) => {  // ✅ Add these props
+  const [selectedMood, setSelectedMood] = useState(formData.mood || "");
+
+  const handleNext = () => {
+    setFormData({ ...formData, mood: selectedMood });
+    onNext();
+  };
 
   return (
     <div className="plan-step">
-      <h2>What’s your travel mood?</h2>
+      <h2>What's your travel mood?</h2>
       <p>Choose one that best matches how you want to feel on this trip</p>
 
       <div className="mood-grid">
@@ -26,7 +31,7 @@ const PlanStep2 = ({ onBack, onNext }) => {
         <button onClick={onBack}>← Back</button>
         <button
           disabled={!selectedMood}
-          onClick={onNext}  
+          onClick={handleNext}  
         >
           Next →
         </button>
