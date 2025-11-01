@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar";
 import Home from "./components/home";
 import PlanTrip from "./components/PlanTrip";
 import PlanSummary from "./pages/PlanSummary";
+import Login from "./components/login";
+import Signup from "./components/Signup";
 
 export default function App() {
   return (
@@ -14,6 +16,9 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/plan-trip" element={<PlanTrip />} />
           <Route path="/plan-summary" element={<PlanSummary />} />
+          <Route path="*" element={<Home />} />  {/* default redirect */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
     </Router>

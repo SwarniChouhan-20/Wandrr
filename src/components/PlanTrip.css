@@ -5,6 +5,8 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff7eb3);
   color: white;
+  margin-top: -130px; /* hides the blue strip under sticky navbar */
+
 }
 
 .plan-step {
@@ -87,4 +89,37 @@ input {
 .btn-group button:hover {
   background: white;
   color: #ff007f;
+}
+
+.duration-slider {
+  width: 100%;
+  appearance: none;
+  height: 6px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  outline: none;
+  cursor: pointer;
+  margin: 10px 0 5px 0;
+}
+
+.duration-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.duration-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #ff007f;
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: white;
 }

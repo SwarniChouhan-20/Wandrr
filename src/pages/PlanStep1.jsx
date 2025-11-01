@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const destinations = ["Tokyo", "Paris", "New York", "Bali", "London"];
 
-const PlanStep1 = ({ onNext, formData, setFormData }) => {  // ✅ Add these props
+const PlanStep1 = ({ onNext, formData, setFormData }) => {
   const [destination, setDestination] = useState(formData.destination || "");
   const [duration, setDuration] = useState(formData.duration || 7);
+  const navigate = useNavigate();
 
   const handleNext = () => {
     setFormData({ ...formData, destination, duration });
@@ -29,21 +31,22 @@ const PlanStep1 = ({ onNext, formData, setFormData }) => {  // ✅ Add these pro
         ))}
       </datalist>
 
-      <label>Trip Duration</label>
-      <div className="duration-options">
-        {[3, 7, 10].map((days) => (
-          <button
-            key={days}
-            className={duration === days ? "selected" : ""}
-            onClick={() => setDuration(days)}
-          >
-            {days} days
-          </button>
-        ))}
+      <label>Trip Duration: {duration} days</label>
+      <input
+        type="range"
+        min="1"
+        max="30"
+        value={duration}
+        onChange={(e) => setDuration(Number(e.target.value))}
+        className="duration-slider"
+      />
+      <div className="range-labels">
+        <span>1 day</span>
+        <span>30 days</span>
       </div>
 
-      <div className="btn-group">
-        <button disabled>← Back</button>
+      <div className="btn-group" style={{ display: "flex", justifyContent: "space-between" }}>
+        <button onClick={() => navigate("/")}>← Back</button>
         <button onClick={handleNext}>Next →</button>
       </div>
     </div>
