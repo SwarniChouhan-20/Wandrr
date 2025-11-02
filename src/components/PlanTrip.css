@@ -5,7 +5,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #ff7eb3, #ff758c, #ff7eb3);
   color: white;
-  margin-top: -130px; /* hides the blue strip under sticky navbar */
+  margin-top: -70px; /* hides the blue strip under sticky navbar */
 
 }
 

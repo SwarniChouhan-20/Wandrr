@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 
 export default function Login() {
@@ -6,6 +7,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,11 +32,9 @@ export default function Login() {
       // Store token and user info in localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-
-      alert(`Welcome back, ${data.user.name}!`);
       
-      // Redirect to dashboard
-      window.location.href = '/';
+      // Redirect to home page
+      navigate('/');
       
     } catch (err) {
       setError(err.message);

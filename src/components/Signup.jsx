@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 
 export default function Signup() {
@@ -8,6 +9,7 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -37,21 +39,17 @@ export default function Signup() {
         throw new Error(data.message || 'Signup failed');
       }
 
-      // Store token and user info in localStorage
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
-      setSuccess(`Account created successfully! Welcome, ${data.user.name}`);
+      setSuccess(`Account created successfully! Redirecting to login...`);
       
       // Clear form
       setName("");
       setEmail("");
       setPassword("");
 
-      // Redirect after 2 seconds
+      // Redirect to login after 1.5 seconds
       setTimeout(() => {
-        window.location.href = '/'; // Change to your dashboard/home route
-      }, 2000);
+        navigate('/login');
+      }, 1500);
       
     } catch (err) {
       setError(err.message);
