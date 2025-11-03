@@ -36,22 +36,23 @@
 }
 
 .ai-itinerary {
-  /* 0. Centering and Max Width (FIXED FOR CENTERING) */
-  max-width: 900px; /* Readability width */
-  margin: 24px auto 0 auto; /* Combined margins: Top=24px, Left/Right=auto (for centering), Bottom=0 */
-  
-  /* 1. Sleek Dark Blue Background */
-  background: #004b8d; /* Slightly softer, more modern dark blue */
-  color: #e5e7eb; /* Light text color */
-  
-  /* 2. Spacing and Structure */
-  padding: 36px; /* Increased padding */
+  max-width: 900px;
+  margin: 24px auto 0 auto;
+
+  /* Light aqua background for a beach feel */
+  background: #E6F7FF;
+   /*Deep navy for readable text */
+   color: black;
+
+  padding: 36px;
   border-radius: 12px;
-  line-height: 1.8; /* Improved line height for better flow */
-  
-  /* 3. Subtle Lift (Shadow) */
-  box-shadow: 0 15px 40px rgba(0, 75, 141, 0.5), /* Deeper shadow matching the blue */
-              0 0 0 1px rgba(100, 160, 255, 0.4); /* Subtle bright border/glow */
-              
+  line-height: 1.8;
+
+  /* Gentle floating card shadow */
+  box-shadow: 0 10px 25px rgba(0, 51, 102, 0.2);
+
   font-family: 'Inter', sans-serif;
+}
+.ai-itinerary strong {
+  color: #0c4679;
 }
