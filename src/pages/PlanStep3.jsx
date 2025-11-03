@@ -72,7 +72,7 @@ const PlanStep3 = ({ onNext, onBack, formData, setFormData }) => {
             "Veg",
             "Vegan",
             "Street Food",
-            "Halal",
+            "Non-Veg",
             "Fine Dine",
           ].map((option) => (
             <button
