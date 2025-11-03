@@ -39,7 +39,10 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="logo">🌍 Wandrr</div>
+      <div className="logo">
+  <img src="/logo.png" alt="logo" style={{ width: "32px", height: "32px" }} />
+</div>
+
 
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
