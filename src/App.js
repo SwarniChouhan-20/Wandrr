@@ -6,6 +6,7 @@ import PlanTrip from "./components/PlanTrip";
 import PlanSummary from "./pages/PlanSummary";
 import Login from "./components/login";
 import Signup from "./components/Signup";
+import AboutUs from "./components/about";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="*" element={<Home />} />  {/* default redirect */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/about" element={<AboutUs />} />
         </Routes>
       </div>
     </Router>

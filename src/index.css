@@ -6,7 +6,7 @@ html, body {
 
 body {
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(to bottom right, #a1c4fd 0%, #c2e9fb 100%);
+  background-color: #f9fafb;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
