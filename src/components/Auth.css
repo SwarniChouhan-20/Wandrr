@@ -1,49 +1,102 @@
+/* Global variables are assumed to be defined by the main app, 
+  but are included here for clarity and local scoping if necessary.
+*/
+:root {
+    --color-primary-indigo: #4f46e5; /* Indigo 600 */
+    --color-primary-purple: #9333ea; /* Purple 600 */
+    --color-secondary-blue: #3b82f6; /* Blue 500 */
+    --color-text-dark: #1f2937; /* Gray 900 */
+    --color-white: #ffffff;
+    --color-gray-light: #f3f4f6; /* Gray 100 */
+}
+
+/* --- Authentication Container (The Card) --- */
 .auth-container {
-  width: 350px;
-  margin: 100px auto;
-  padding: 30px;
-  background: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  border-radius: 10px;
-  text-align: center;
-  margin-top: 10px;
+    width: 100%;
+    max-width: 400px; /* Increased slightly for a modern look */
+    margin: 100px auto 50px auto; /* Adjust margin for positioning */
+    padding: 40px; /* Increased padding */
+    background: var(--color-white);
+    
+    /* Soft, rounded corners and shadow matching the button style */
+    border-radius: 16px; 
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    text-align: center;
+    position: relative; /* Needed for potential subtle background effects */
+    overflow: hidden;
 }
 
 .auth-container h2 {
-  margin-bottom: 20px;
+    margin-bottom: 24px;
+    font-size: 1.875rem; /* Larger heading */
+    color: var(--color-text-dark);
 }
 
 .auth-container form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Increased gap */
 }
 
+/* --- Input Fields --- */
 .auth-container input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+    padding: 12px;
+    border: 1px solid #e5e7eb; /* Light gray border */
+    border-radius: 8px; /* Nicely rounded corners */
+    font-size: 1rem;
+    color: var(--color-text-dark);
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+.auth-container input:focus {
+    border-color: var(--color-primary-purple);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.2); /* Soft purple focus ring */
+}
+
+/* --- Button Styling (The CTA) --- */
 .auth-container button {
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
+    padding: 14px 20px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-white);
+    border: none;
+    border-radius: 9999px; /* Pill shape like the home button */
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    
+    /* Gradient matching the landing page CTA */
+    background: linear-gradient(to right, var(--color-secondary-blue), var(--color-primary-purple));
+    box-shadow: 0 8px 15px -5px rgba(147, 51, 234, 0.5); /* Stronger button shadow */
+    
+    transition: all 0.3s ease;
 }
 
 .auth-container button:hover {
-  background-color: #0056b3;
+    /* Subtle lifting effect on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px -5px rgba(147, 51, 234, 0.7);
+    opacity: 0.95;
 }
 
+/* --- Link Styling --- */
 .auth-container a {
-  color: #007bff;
-  text-decoration: none;
+    color: var(--color-secondary-blue); /* Use primary brand blue for links */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
 }
 
 .auth-container a:hover {
-  text-decoration: underline;
+    color: var(--color-primary-purple);
+    text-decoration: underline;
+}
+
+/* Style for any small message or switch link (e.g., "Don't have an account?") */
+.switch-link-message {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #6b7280; /* Gray 500 */
 }
