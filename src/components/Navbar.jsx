@@ -49,6 +49,7 @@ export default function Navbar() {
           </a>
         </li>
         <li><Link to="/discover">Discover</Link></li>
+        <li><Link to="/discover">About Us</Link></li>
       </ul>
 
       <div className="auth-buttons">

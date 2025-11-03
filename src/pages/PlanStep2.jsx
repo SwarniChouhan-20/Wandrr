@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const moods = ["Party", "Relaxing", "Adventure", "Cultural"];
+const moods = ["Party", "Relaxing", "Adventure", "Cultural", "Romantic", "Wellness"];
 
 const PlanStep2 = ({ onBack, onNext, formData, setFormData }) => {  // ✅ Add these props
   const [selectedMood, setSelectedMood] = useState(formData.mood || "");

@@ -1,5 +1,5 @@
 .plan-step3 {
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  background: linear-gradient(135deg, #f9e9ea, #5a38d6);
   color: white;
   padding: 60px;
   border-radius: 20px;
@@ -29,6 +29,7 @@ input[type="range"] {
   justify-content: space-between;
   font-size: 0.9rem;
   margin-top: 5px;
+  text-decoration-color: black;
 }
 
 .travel-type-options,
