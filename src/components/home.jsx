@@ -46,12 +46,11 @@ export default function Home() {
           body {
             scroll-behavior: smooth;
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb; /* Light background */
+            background-color: #fffebbff; /* Light background */
           }
 
           .home-container-styled {
               min-height: 100vh;
-              padding: 20px;
               position: relative;
               overflow: hidden;
               display: flex;
@@ -82,9 +81,6 @@ export default function Home() {
               text-align: center;
               position: relative;
               z-index: 10;
-              /* Padding to push content down past a fixed header if one exists */
-              padding-top: 100px; 
-              padding-bottom: 50px; /* Added padding to ensure scroll visibility */
           }
 
           /* --- Hero Section Styling --- */
