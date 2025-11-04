@@ -35,9 +35,7 @@ export default function Home() {
 
         {/* Main Title with Gradient */}
         <h1 className="hero-title-modern">
-          Plan Your Dream
-          <span className="gradient-text"> Adventure</span>
-        </h1>
+          Plan Your Dream Adventure   </h1>
 
         {/* Subtitle */}
         <p className="hero-subtitle-modern">
