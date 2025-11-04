@@ -7,6 +7,7 @@ import PlanSummary from "./pages/PlanSummary";
 import Login from "./components/login";
 import Signup from "./components/Signup";
 import AboutUs from "./components/about";
+import Feedback from "./components/Feedback"
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </div>
     </Router>

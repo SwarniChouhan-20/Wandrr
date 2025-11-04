@@ -50,6 +50,7 @@ export default function Navbar() {
 
       <Link to="/" className="btn-logout">Home</Link>
       <Link to="/about" className="btn-logout">About Us</Link>
+      <Link to="/feedback" className="btn-logout">Feedback</Link>
 
       <div className="btn-logout">
         <User className="user-icon" />
@@ -65,6 +66,7 @@ export default function Navbar() {
     <>
       <Link to="/" className="btn-logout">Home</Link>
       <Link to="/about" className="btn-logout">About Us</Link>
+      <Link to="/feedback" className="btn-logout">Feedback</Link>
 
       <Link to="/login">
         <button className="btn-logout">Login</button>
@@ -89,6 +91,7 @@ export default function Navbar() {
           <Link to="/plan-trip" className="mobile-link" onClick={toggleMenu}>Plan Trip</Link>
           <Link to="/discover" className="mobile-link" onClick={toggleMenu}>Discover</Link>
           <Link to="/about" className="mobile-link" onClick={toggleMenu}>About Us</Link>
+          <Link to="/feedback" className="mobile-link" onClick={toggleMenu}>Feedback</Link>
           
           <div className="mobile-auth">
             {user ? (

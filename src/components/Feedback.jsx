@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Star, Send, Heart } from 'lucide-react';
-import './ReviewPage.css';
+import './Feedback.css';
 
-const ReviewPage = () => {
+const Feedback = () => {
   const [formData, setFormData] = useState({
     overallRating: 0,
     tripExperience: 0,
@@ -59,12 +59,7 @@ const ReviewPage = () => {
 
   return (
     <div className="review-page">
-      <div className="review-header">
-        <div className="logo-section">
-          <Heart className="logo-icon" />
-          <span className="logo-text">Wandrr</span>
-        </div>
-      </div>
+      
 
       <div className="review-container">
         <div className="review-content">
@@ -179,4 +174,4 @@ const ReviewPage = () => {
   );
 };
 
-export default ReviewPage;
+export default Feedback;
