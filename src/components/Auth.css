@@ -8,10 +8,12 @@
     --color-text-dark: #1f2937; /* Gray 900 */
     --color-white: #ffffff;
     --color-gray-light: #f3f4f6; /* Gray 100 */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 /* --- Authentication Container (The Card) --- */
 .auth-container {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     width: 100%;
     max-width: 400px; /* Increased slightly for a modern look */
     margin: 100px auto 50px auto; /* Adjust margin for positioning */
