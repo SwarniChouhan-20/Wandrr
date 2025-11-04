@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Menu, X, User, LogOut } from "lucide-react";
 import "./Navbar.css";
@@ -7,14 +7,17 @@ export default function Navbar() {
   const [user, setUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // Add this
 
   useEffect(() => {
     // Check if user is logged in
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+    } else {
+      setUser(null); // Add this to clear user when logged out
     }
-  }, []);
+  }, [location]); // Add location as dependency
 
   const handleLogout = () => {
     // Remove token and user from localStorage
@@ -34,7 +37,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="navbar-logo">
           <img src="/logo.png" alt="Wandrr Logo" className="logo-image" />
-          
+          <span className="logo-text">Wandrr</span>
         </Link>
 
         {/* Desktop Navigation Links */}
