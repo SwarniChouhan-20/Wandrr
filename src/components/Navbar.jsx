@@ -39,34 +39,42 @@ export default function Navbar() {
 
         {/* Desktop Navigation Links */}
         <ul className="nav-links-modern">
-          <li><Link to="/" className="nav-link">Home</Link></li>
-          <li><Link to="/about" className="nav-link">About Us</Link></li>
+          
         </ul>
 
         {/* Auth Section */}
-        <div className="auth-section">
-          {user ? (
-            <>
-              <div className="user-profile">
-                <User className="user-icon" />
-                <span className="user-name-modern">{user.name}</span>
-              </div>
-              <button className="btn-logout" onClick={handleLogout}>
-                <LogOut size={18} />
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">
-                <button className="btn-login">Login</button>
-              </Link>
-              <Link to="/signup">
-                <button className="btn-signup">Sign Up</button>
-              </Link>
-            </>
-          )}
-        </div>
+<div className="auth-section">
+  {user ? (
+    <>
+      
+
+      <Link to="/" className="btn-logout">Home</Link>
+      <Link to="/about" className="btn-logout">About Us</Link>
+
+      <div className="btn-logout">
+        <User className="user-icon" />
+        <span className="user-name-modern">{user.name}</span>
+      </div>
+
+      <button className="btn-logout" onClick={handleLogout}>
+        <LogOut size={18} />
+        Logout
+      </button>
+    </>
+  ) : (
+    <>
+      <Link to="/" className="btn-logout">Home</Link>
+      <Link to="/about" className="btn-logout">About Us</Link>
+
+      <Link to="/login">
+        <button className="btn-logout">Login</button>
+      </Link>
+      <Link to="/signup">
+        <button className="btn-logout">Sign Up</button>
+      </Link>
+    </>
+  )}
+</div>
 
         {/* Mobile Menu Toggle */}
         <button className="mobile-menu-toggle" onClick={toggleMenu}>
