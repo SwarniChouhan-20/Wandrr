@@ -102,3 +102,7 @@
     font-size: 0.95rem;
     color: #6b7280; /* Gray 500 */
 }
+
+.minor{
+    padding: 15px;
+}
