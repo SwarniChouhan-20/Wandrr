@@ -58,6 +58,7 @@ const App = () => {
               min-height: 100vh;
               /* Increased top padding significantly to ensure content starts below fixed external navbar */
               padding: 120px 20px 40px; 
+              font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
               position: relative;
               overflow: hidden;
               background-color: var(--color-light-bg);
