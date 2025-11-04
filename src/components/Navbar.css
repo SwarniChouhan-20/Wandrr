@@ -42,12 +42,13 @@
 }
 
 .logo-image {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 8px;
 }
 
 .logo-text {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 1.5rem;
   font-weight: 800;
   background: linear-gradient(135deg, #667eea, #764ba2);

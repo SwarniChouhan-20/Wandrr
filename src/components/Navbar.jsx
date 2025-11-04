@@ -34,7 +34,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="navbar-logo">
           <img src="/logo.png" alt="Wandrr Logo" className="logo-image" />
-          <span className="logo-text">Wandrr</span>
+          
         </Link>
 
         {/* Desktop Navigation Links */}
