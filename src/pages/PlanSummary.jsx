@@ -8,7 +8,7 @@ const PlanSummary = ({ formData, onBack }) => {
   const navigate = useNavigate();
   const { destination, duration, mood, budget, travelType, foodPreferences } = formData;
 
-  const [itinerary, setItinerary] = useState("");
+  const [itinerary, setItinerary] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const contentRef = useRef(null);
@@ -26,6 +26,44 @@ const PlanSummary = ({ formData, onBack }) => {
   useEffect(() => {
     generateAIItinerary();
   }, []);
+
+  const parseItinerary = (text) => {
+    const days = [];
+    let budgetBreakdown = "";
+    
+    // Extract budget breakdown
+    const budgetMatch = text.match(/BUDGET BREAKDOWN\s*([\s\S]*?)(?=DAY 1:|$)/i);
+    if (budgetMatch) {
+      budgetBreakdown = budgetMatch[1].trim();
+    }
+
+    // Split by days
+    const dayRegex = /DAY (\d+):\s*([^\n]+)\s*([\s\S]*?)(?=DAY \d+:|$)/gi;
+    let match;
+
+    while ((match = dayRegex.exec(text)) !== null) {
+      const dayNumber = match[1];
+      const dayTitle = match[2].trim();
+      const dayContent = match[3];
+
+      // Extract sections
+      const placesMatch = dayContent.match(/Places to Visit:\s*([\s\S]*?)(?=Food & Dining:|$)/i);
+      const foodMatch = dayContent.match(/Food & Dining:\s*([\s\S]*?)(?=Extra Tips:|$)/i);
+      const tipsMatch = dayContent.match(/Extra Tips:\s*([\s\S]*?)(?=Day Tip:|$)/i);
+      const dayTipMatch = dayContent.match(/Day Tip:\s*([\s\S]*?)(?=---|$)/i);
+
+      days.push({
+        dayNumber,
+        dayTitle,
+        places: placesMatch ? placesMatch[1].trim() : "",
+        food: foodMatch ? foodMatch[1].trim() : "",
+        tips: tipsMatch ? tipsMatch[1].trim() : "",
+        dayTip: dayTipMatch ? dayTipMatch[1].trim() : ""
+      });
+    }
+
+    return { budgetBreakdown, days };
+  };
 
   const generateAIItinerary = async () => {
     setLoading(true);
@@ -79,37 +117,13 @@ Repeat this exact structure for each of the ${duration} days. Write naturally wi
       
       // Clean up the text - remove markdown symbols but keep structure
       generatedText = generatedText
-        .replace(/[#*_`]/g, '') // Remove markdown symbols
-        .replace(/\*\*/g, '')   // Remove bold markers
-        .replace(/##/g, '')     // Remove headers
-        .split('\n')
-        .map(line => {
-          // Add bullet points to lines that start with content (not empty, not headers)
-          const trimmedLine = line.trim();
-          
-          // Skip empty lines and main headers
-          if (!trimmedLine || 
-              trimmedLine.startsWith('BUDGET BREAKDOWN') ||
-              trimmedLine.startsWith('DAY') ||
-              trimmedLine.startsWith('---') ||
-              trimmedLine.startsWith('Places to Visit:') ||
-              trimmedLine.startsWith('Food & Dining:') ||
-              trimmedLine.startsWith('Extra Tips:') ||
-              trimmedLine.startsWith('Day Tip:')) {
-            return line;
-          }
-          
-          // Add bullet point if line doesn't already start with one
-          if (trimmedLine && !trimmedLine.startsWith('•')) {
-            return '  • ' + trimmedLine;
-          }
-          
-          return line;
-        })
-        .join('\n')
+        .replace(/[#*_`]/g, '')
+        .replace(/\*\*/g, '')
+        .replace(/##/g, '')
         .trim();
       
-      setItinerary(generatedText);
+      const parsed = parseItinerary(generatedText);
+      setItinerary(parsed);
     } catch (err) {
       setError(err.message || "Connection error.");
       console.error("Backend Error:", err);
@@ -118,31 +132,27 @@ Repeat this exact structure for each of the ${duration} days. Write naturally wi
     }
   };
 
-  // Function to format text with bold and underlined place names
-  const formatItinerary = (text) => {
-    const lines = text.split('\n');
-    return lines.map((line, index) => {
-      // Check if line contains a place name (ends with colon after bullet point)
-      const placeNameMatch = line.match(/^(\s*•\s*)([^:]+)(:.*)/);
+  const formatCardContent = (text) => {
+    return text.split('\n').map((line, idx) => {
+      const trimmed = line.trim();
+      if (!trimmed) return null;
       
-      if (placeNameMatch) {
-        const [, bullet, placeName, description] = placeNameMatch;
+      // Check if line contains a place/item name (format: "Name: description")
+      const match = trimmed.match(/^([^:]+):\s*(.+)$/);
+      if (match) {
         return (
-          <div key={index}>
-            {bullet}
-            <strong style={{ textDecoration: 'underline' }}>{placeName}</strong>
-            {description}
+          <div key={idx} style={{ marginBottom: '12px' }}>
+            <strong style={{ color: '#2d5a8f' }}>{match[1]}:</strong> {match[2]}
           </div>
         );
       }
       
-      return <div key={index}>{line || '\u00A0'}</div>;
-    });
+      return <div key={idx} style={{ marginBottom: '8px' }}>{trimmed}</div>;
+    }).filter(Boolean);
   };
 
   const downloadPDF = async () => {
     try {
-      // Using html2pdf library
       const element = contentRef.current;
       const opt = {
         margin: 1,
@@ -152,7 +162,6 @@ Repeat this exact structure for each of the ${duration} days. Write naturally wi
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
 
-      // Check if html2pdf is available
       if (typeof html2pdf === 'undefined') {
         alert('PDF library not loaded. Please add the html2pdf script to your index.html');
         return;
@@ -194,9 +203,60 @@ Repeat this exact structure for each of the ${duration} days. Write naturally wi
 
         {itinerary && !loading && (
           <div className="ai-itinerary">
-            <div style={{ fontFamily: "inherit", lineHeight: "1.8" }}>
-              {formatItinerary(itinerary)}
-            </div>
+            {/* Budget Breakdown Section */}
+            {itinerary.budgetBreakdown && (
+              <div className="budget-section">
+                <h3>💰 Budget Breakdown</h3>
+                <div className="budget-content">
+                  {formatCardContent(itinerary.budgetBreakdown)}
+                </div>
+              </div>
+            )}
+
+            {/* Days Itinerary */}
+            {itinerary.days.map((day) => (
+              <div key={day.dayNumber} className="day-section">
+                <h3 className="day-header">
+                  DAY {day.dayNumber}: {day.dayTitle}
+                </h3>
+                
+                <div className="cards-container">
+                  {/* Places to Visit Card */}
+                  <div className="itinerary-card places-card">
+                    <div className="card-icon">📍</div>
+                    <h4>Places to Visit</h4>
+                    <div className="card-content">
+                      {formatCardContent(day.places)}
+                    </div>
+                  </div>
+
+                  {/* Food & Dining Card */}
+                  <div className="itinerary-card food-card">
+                    <div className="card-icon">🍽️</div>
+                    <h4>Food & Dining</h4>
+                    <div className="card-content">
+                      {formatCardContent(day.food)}
+                    </div>
+                  </div>
+
+                  {/* Extra Tips Card */}
+                  <div className="itinerary-card tips-card">
+                    <div className="card-icon">💡</div>
+                    <h4>Extra Tips</h4>
+                    <div className="card-content">
+                      {formatCardContent(day.tips)}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Day Tip */}
+                {day.dayTip && (
+                  <div className="day-tip">
+                    <strong>💫 Day Tip:</strong> {day.dayTip}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>
