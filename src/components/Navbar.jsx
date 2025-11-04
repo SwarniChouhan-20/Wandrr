@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import "./Navbar.css";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,60 +24,92 @@ export default function Navbar() {
     navigate('/login');
   };
 
-  const handlePlanTripClick = (e) => {
-    e.preventDefault(); // Prevent default link behavior
-    
-    // Check if user is logged in
-    const token = localStorage.getItem('token');
-    
-    if (token) {
-      // User is logged in, go to plan-trip page
-      navigate('/plan-trip');
-    } else {
-      // User is not logged in, redirect to login
-      navigate('/login');
-    }
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="navbar">
-      <div className="logo">
-  <img src="/logo.png" alt="logo" style={{ width: "32px", height: "32px" }} />
-</div>
+    <nav className="navbar-modern">
+      <div className="navbar-container">
+        {/* Logo */}
+        <Link to="/" className="navbar-logo">
+          <img src="/logo.png" alt="Wandrr Logo" className="logo-image" />
+          <span className="logo-text">Wandrr</span>
+        </Link>
 
+        {/* Desktop Navigation Links */}
+        <ul className="nav-links-modern">
+          <li><Link to="/" className="nav-link">Home</Link></li>
+          <li><Link to="/about" className="nav-link">About Us</Link></li>
+        </ul>
 
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li>
-          <a href="/plan-trip" onClick={handlePlanTripClick}>
-            Plan Trip
-          </a>
-        </li>
-        <li><Link to="/discover">Discover</Link></li>
-        <li><Link to="/about">About Us</Link></li>
-      </ul>
+        {/* Auth Section */}
+        <div className="auth-section">
+          {user ? (
+            <>
+              <div className="user-profile">
+                <User className="user-icon" />
+                <span className="user-name-modern">{user.name}</span>
+              </div>
+              <button className="btn-logout" onClick={handleLogout}>
+                <LogOut size={18} />
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <button className="btn-login">Login</button>
+              </Link>
+              <Link to="/signup">
+                <button className="btn-signup">Sign Up</button>
+              </Link>
+            </>
+          )}
+        </div>
 
-      <div className="auth-buttons">
-        {user ? (
-          // Show user name and logout button when logged in
-          <>
-            <span className="user-name">👋 {user.name}</span>
-            <button className="logout" onClick={handleLogout}>
-              Logout
-            </button>
-          </>
-        ) : (
-          // Show login and signup buttons when not logged in
-          <>
-            <Link to="/login">
-              <button className="login">Login</button>
-            </Link>
-            <Link to="/signup">
-              <button className="signup">Sign Up</button>
-            </Link>
-          </>
-        )}
+        {/* Mobile Menu Toggle */}
+        <button className="mobile-menu-toggle" onClick={toggleMenu}>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="mobile-menu">
+          <Link to="/" className="mobile-link" onClick={toggleMenu}>Home</Link>
+          <Link to="/plan-trip" className="mobile-link" onClick={toggleMenu}>Plan Trip</Link>
+          <Link to="/discover" className="mobile-link" onClick={toggleMenu}>Discover</Link>
+          <Link to="/about" className="mobile-link" onClick={toggleMenu}>About Us</Link>
+          
+          <div className="mobile-auth">
+            {user ? (
+              <>
+                <div className="mobile-user-info">
+                  <User size={20} />
+                  <span>{user.name}</span>
+                </div>
+                <button className="mobile-logout" onClick={() => {
+                  handleLogout();
+                  toggleMenu();
+                }}>
+                  <LogOut size={18} />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" onClick={toggleMenu}>
+                  <button className="mobile-login">Login</button>
+                </Link>
+                <Link to="/signup" onClick={toggleMenu}>
+                  <button className="mobile-signup">Sign Up</button>
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
