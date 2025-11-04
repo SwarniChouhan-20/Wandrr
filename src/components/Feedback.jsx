@@ -2,6 +2,26 @@ import React, { useState } from 'react';
 import { Star, Send, Heart } from 'lucide-react';
 import './Feedback.css';
 
+// Move StarRating component OUTSIDE of Feedback component
+const StarRating = ({ field, label, formData, hoveredRating, setHoveredRating, handleRatingClick }) => (
+  <div className="rating-group">
+    <label className="rating-label">{label}</label>
+    <div className="stars-container">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className={`star ${
+            star <= (hoveredRating[field] || formData[field]) ? 'filled' : ''
+          }`}
+          onMouseEnter={() => setHoveredRating({ ...hoveredRating, [field]: star })}
+          onMouseLeave={() => setHoveredRating({ ...hoveredRating, [field]: 0 })}
+          onClick={() => handleRatingClick(field, star)}
+        />
+      ))}
+    </div>
+  </div>
+);
+
 const Feedback = () => {
   const [formData, setFormData] = useState({
     overallRating: 0,
@@ -38,29 +58,8 @@ const Feedback = () => {
     setTimeout(() => setSubmitted(false), 3000);
   };
 
-  const StarRating = ({ field, label }) => (
-    <div className="rating-group">
-      <label className="rating-label">{label}</label>
-      <div className="stars-container">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Star
-            key={star}
-            className={`star ${
-              star <= (hoveredRating[field] || formData[field]) ? 'filled' : ''
-            }`}
-            onMouseEnter={() => setHoveredRating({ ...hoveredRating, [field]: star })}
-            onMouseLeave={() => setHoveredRating({ ...hoveredRating, [field]: 0 })}
-            onClick={() => handleRatingClick(field, star)}
-          />
-        ))}
-      </div>
-    </div>
-  );
-
   return (
     <div className="review-page">
-      
-
       <div className="review-container">
         <div className="review-content">
           <div className="review-hero">
@@ -72,21 +71,43 @@ const Feedback = () => {
 
           <form onSubmit={handleSubmit} className="review-form">
             {/* Question 1: Overall Rating */}
-            <StarRating field="overallRating" label="1. Overall Experience Rating" />
+            <StarRating 
+              field="overallRating" 
+              label="1. Overall Experience Rating"
+              formData={formData}
+              hoveredRating={hoveredRating}
+              setHoveredRating={setHoveredRating}
+              handleRatingClick={handleRatingClick}
+            />
 
             {/* Question 2: Trip Experience */}
-            <StarRating field="tripExperience" label="2. How was your trip experience?" />
+            <StarRating 
+              field="tripExperience" 
+              label="2. How was your trip experience?"
+              formData={formData}
+              hoveredRating={hoveredRating}
+              setHoveredRating={setHoveredRating}
+              handleRatingClick={handleRatingClick}
+            />
 
             {/* Question 3: Itinerary Quality */}
             <StarRating
               field="itineraryQuality"
               label="3. AI Itinerary Quality & Personalization"
+              formData={formData}
+              hoveredRating={hoveredRating}
+              setHoveredRating={setHoveredRating}
+              handleRatingClick={handleRatingClick}
             />
 
             {/* Question 4: Website Usability */}
             <StarRating
               field="websiteUsability"
               label="4. Website Ease of Use & Navigation"
+              formData={formData}
+              hoveredRating={hoveredRating}
+              setHoveredRating={setHoveredRating}
+              handleRatingClick={handleRatingClick}
             />
 
             {/* Question 5: Trip Details */}
