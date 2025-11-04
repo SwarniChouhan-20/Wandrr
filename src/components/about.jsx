@@ -345,14 +345,14 @@ const App = () => {
           <section className="team-note-section">
               <h2 className="team-note-title">A Note from the Team</h2>
               <p className="team-note-text">
-                We started this platform because we were tired of the "one-size-fits-all" travel guides. We envisioned a world where finding the perfect 'Cultural' trip with a 'Street Food' preference was as easy as a few clicks. Every feature, from the budget slider to the mood selector, is designed to **respect your individuality and inspire you to travel better, not just more**. Thank you for being part of our journey.
+                We started this platform because we were tired of the "one-size-fits-all" travel guides. We envisioned a world where finding the perfect 'Cultural' trip with a 'Street Food' preference was as easy as a few clicks. Every feature, from the budget slider to the mood selector, is designed to respect your individuality and inspire you to travel better, not just more. Thank you for being part of our journey.
               </p>
           </section>
 
           {/* Final CTA - Button */}
           <section className="cta-section">
               <a 
-                href="#" 
+                href="/plan-trip" 
                 className="cta-button"
               >
                 <Rocket className="cta-icon"/>
