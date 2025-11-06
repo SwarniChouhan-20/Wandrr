@@ -13,8 +13,8 @@ const PlanSummary = ({ formData, onBack }) => {
   const [error, setError] = useState("");
   const contentRef = useRef(null);
 
-  // 🔑 Gemini API Key from env
-  const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
+  // 🔑 Your Gemini API Key
+  const GEMINI_API_KEY = "AIzaSyCoekjWF4yyj2Chq2oDhaxpo2PIKZ8J0hI";
 
   // Initialize Gemini-compatible OpenAI client
   const client = new OpenAI({
