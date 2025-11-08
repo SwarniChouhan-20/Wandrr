@@ -103,7 +103,7 @@ Day Tip: One quick, helpful tip for the day (transportation hack, hidden gem, or
 Repeat this exact structure for each of the ${duration} days. Write naturally without using hashtags, asterisks, or markdown symbols. Just write it like you're chatting with a friend about their trip.`;
 
     try {
-      const response = await fetch("http://localhost:5000/api/itinerary", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/itinerary`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
