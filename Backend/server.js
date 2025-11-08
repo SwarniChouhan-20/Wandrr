@@ -21,6 +21,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 
 // Existing Itinerary Route
+app.get("/", (req, res) => res.send("Backend live ✅"));
+
 app.post("/api/itinerary", async (req, res) => {
   try {
     const { prompt } = req.body;
