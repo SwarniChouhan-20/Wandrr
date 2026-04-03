@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const destinations = ["Tokyo", "Paris", "New York", "Bali", "London"];
+const destinations = ["Tokyo", "Paris", "New York", "Bali", "London", "Dubai", "Singapore", "Rome", "Barcelona", "Bangkok"];
 
 const PlanStep1 = ({ onNext, formData, setFormData }) => {
   const [destination, setDestination] = useState(formData.destination || "");
+  const [origin, setOrigin] = useState(formData.origin || "");
   const [duration, setDuration] = useState(formData.duration || 7);
   const navigate = useNavigate();
 
   const handleNext = () => {
-    setFormData({ ...formData, destination, duration });
+    if (!destination.trim()) {
+      alert("Please enter a destination.");
+      return;
+    }
+    if (!origin.trim()) {
+      alert("Please enter where you're travelling from.");
+      return;
+    }
+    setFormData({ ...formData, destination, origin, duration });
     onNext();
   };
 
@@ -17,6 +26,14 @@ const PlanStep1 = ({ onNext, formData, setFormData }) => {
     <div className="plan-step">
       <h2>Where would you like to go?</h2>
       <p>Tell us your dream destination and how long you'd like to stay</p>
+
+      <label>Travelling From</label>
+      <input
+        type="text"
+        placeholder="e.g. Mumbai, India"
+        value={origin}
+        onChange={(e) => setOrigin(e.target.value)}
+      />
 
       <label>Destination</label>
       <input

@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
+import itineraryRoutes from "./routes/itineraryRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // handles form-data & urlencoded
 // Auth Routes
 app.use('/api/auth', authRoutes);
+app.use("/api/itineraries", itineraryRoutes);
 
 // Existing Itinerary Route
 app.get("/", (req, res) => res.send("Backend live ✅"));
